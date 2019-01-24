@@ -1,15 +1,15 @@
 export default {
   type: Phaser.AUTO,
   parent: "es6-template",
-  width: 640,
-  height: 512,
+  width: 300,
+  height: 600,
   pixelArt: true,
   roundPixels: true,
   physics: {
-    default: 'arcade',
+    default: "arcade",
     arcade: {
       debug: false,
-      gravity: { y: 0 }
-    }
-  }
+      gravity: { y: 0 },
+    },
+  },
 };
