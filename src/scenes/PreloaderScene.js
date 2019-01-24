@@ -21,7 +21,11 @@ export default class PreloaderScene extends Phaser.Scene {
     this.width = this.cameras.main.width;
     this.height = this.cameras.main.height;
     // add logo image
-    this.logo = this.add.image(this.width / 2, this.height / 2 - 100, "phaser-logo");
+    this.logo = this.add.image(
+      this.width / 2,
+      this.height / 2 - 100,
+      "phaser-logo",
+    );
 
     // build loading bar and container
     this.progressBar = this.add.graphics();
@@ -102,12 +106,20 @@ export default class PreloaderScene extends Phaser.Scene {
 
   loadAssets() {
     // load assets for game
+
+    // tilemap in JSON format
+    this.load.tilemapTiledJSON("forest-run", "assets/quelavez.json");
+    this.load.spritesheet("tree_and_ground", "assets/tree_and_ground.png", {
+      frameWidth: 32,
+      frameHeight: 32,
+    });
   }
 
   ready() {
     this.readyCount++;
-    if (this.readyCount === 2) {
-      this.scene.start("Title");
-    }
+    // if (this.readyCount === 2) {
+    // change to Title
+    this.scene.start("Game");
+    // }
   }
 }
