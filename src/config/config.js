@@ -1,6 +1,6 @@
 export default {
   type: Phaser.AUTO,
-  parent: "es6-template",
+  parent: "wib",
   width: 300,
   height: 600,
   pixelArt: true,
@@ -8,7 +8,7 @@ export default {
   physics: {
     default: "arcade",
     arcade: {
-      debug: false,
+      debug: true,
       gravity: { y: 0 },
     },
   },

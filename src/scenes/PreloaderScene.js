@@ -17,6 +17,19 @@ export default class PreloaderScene extends Phaser.Scene {
     this.loadAssets();
   }
 
+  create() {
+    // wib
+    this.anims.create({
+      key: "wib-run-top",
+      frames: this.anims.generateFrameNames("wib", {
+        frames: [0, 1, 2],
+      }),
+      frameRate: 3,
+      yoyo: false,
+      repeat: -1,
+    });
+  }
+
   createPreloader() {
     this.width = this.cameras.main.width;
     this.height = this.cameras.main.height;
@@ -105,11 +118,36 @@ export default class PreloaderScene extends Phaser.Scene {
   }
 
   loadAssets() {
+    // audio
+    this.load.audio(
+      "drone",
+      "assets/23141852_drones_by_thefoundation_preview.mp3",
+    );
+
     // load assets for game
+    this.load.image("wib-tile", "assets/WIB-tile.png");
+    this.load.image("glowBark-tile", "assets/Quelavez-tile.png");
+    this.load.image("weepingMary-tile", "assets/WeepingMary-tile.png");
+    this.load.image("moltener-tile", "assets/Moltener-tile.png");
+    this.load.image("drop-zone", "assets/input-touch-drop-zone.png");
 
     // tilemap in JSON format
     this.load.tilemapTiledJSON("forest-run", "assets/quelavez.json");
-    this.load.spritesheet("tree_and_ground", "assets/tree_and_ground.png", {
+
+    // spritesheets
+    this.load.spritesheet(
+      "tree(64x64)_and_ground",
+      "assets/tree(64x64)_and_ground.png",
+      {
+        frameWidth: 32,
+        frameHeight: 32,
+      },
+    );
+    this.load.spritesheet("wib", "assets/wib.png", {
+      frameWidth: 32,
+      frameHeight: 32,
+    });
+    this.load.spritesheet("button-run", "assets/button-run.png", {
       frameWidth: 32,
       frameHeight: 32,
     });

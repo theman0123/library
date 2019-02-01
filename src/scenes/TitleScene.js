@@ -14,7 +14,7 @@ export default class TitleScene extends Phaser.Scene {
     this.height = this.cameras.main.height;
 
     gameObject.x = this.width / 2;
-    gameObject.y = this.width / 2 + 200;
+    gameObject.y = this.height / 2 + 200;
   }
 
   createTitle() {
