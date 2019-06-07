@@ -4,7 +4,7 @@ import RunButton from "../sprites/RunButton.js";
 export default class UIScene extends Phaser.Scene {
   constructor() {
     // 'active: true' means this scene is always running
-    super({ key: "UI", active: true });
+    super({ key: "UI", active: false });
   }
 
   init() {

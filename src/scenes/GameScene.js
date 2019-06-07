@@ -23,6 +23,9 @@ export default class GameScene extends Phaser.Scene {
     this.input.keyboard.on("keydown_" + "C", event => {
       this.scene.start("Cornering");
     });
+    this.input.keyboard.on("keydown_" + "L", event => {
+      this.scene.start("Library");
+    });
     this.events.emit("displayUI");
 
     this.setupSunsetMask();

@@ -6,6 +6,7 @@ import PreloaderScene from "./scenes/PreloaderScene";
 import UIScene from "./scenes/UIScene";
 import TitleScene from "./scenes/TitleScene";
 import CorneringScene from "./scenes/CorneringScene";
+import LibraryScene from "./scenes/LibraryScene";
 
 class Game extends Phaser.Game {
   constructor() {
@@ -14,6 +15,7 @@ class Game extends Phaser.Game {
     this.scene.add("Boot", BootScene);
     this.scene.add("Preloader", PreloaderScene);
     this.scene.add("Game", GameScene);
+    this.scene.add("Library", LibraryScene);
     this.scene.add("UI", UIScene);
     this.scene.add("Title", TitleScene);
     this.scene.add("Cornering", CorneringScene);

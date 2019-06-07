@@ -7,6 +7,9 @@ export default class PreloaderScene extends Phaser.Scene {
 
   init() {
     this.readyCount = 1;
+    this.frames = {
+      josh: {}
+    }
   }
 
   preload() {
@@ -18,6 +21,7 @@ export default class PreloaderScene extends Phaser.Scene {
   }
 
   create() {
+    // create anims
     // wib
     this.anims.create({
       key: "wib-run-top",
@@ -27,6 +31,37 @@ export default class PreloaderScene extends Phaser.Scene {
       frameRate: 3,
       yoyo: false,
       repeat: -1,
+    });
+
+    this.anims.create({
+      key: "josh-walk-south",
+      frames: this.anims.generateFrameNames("josh-walk-s", {
+        frames: [1, 2, 3, 4],
+      }),
+      frameRate: 5,
+      yoyo: false,
+      repeat: 1,
+    });
+    this.anims.create({
+      key: "josh-idle",
+      frames: this.anims.generateFrameNames("josh-idle-frames"),
+      frameRate: 5,
+      yoyo: false,
+      repeat: 1,
+    });
+    this.anims.create({
+      key: "josh-walk-west",
+      frames: this.anims.generateFrameNames("josh-walk-w"),
+      frameRate: 5,
+      yoyo: false,
+      repeat: 1,
+    });
+    this.anims.create({
+      key: "josh-walk-north",
+      frames: this.anims.generateFrameNames("josh-walk-n"),
+      frameRate: 5,
+      yoyo: false,
+      repeat: 1,
     });
   }
 
@@ -133,8 +168,22 @@ export default class PreloaderScene extends Phaser.Scene {
 
     // tilemap in JSON format
     this.load.tilemapTiledJSON("forest-run", "assets/quelavez.json");
+    this.load.tilemapTiledJSON("library-map", "assets/maps/library1.json");
+
+    // atlas spritesheet
+    this.load.multiatlas('library-atlas', 'assets/library.json', 'assets');
+    // haven't tried might work
+    // this.load.atlas('megaset', 'assets/atlas/megaset-0.png', 'assets/atlas/megaset-0.json');
 
     // spritesheets
+    this.load.spritesheet(
+      "library-tileset",
+      "assets/library-0.png",
+      {
+        frameWidth: 32,
+        frameHeight: 32,
+      },
+    );
     this.load.spritesheet(
       "tree(64x64)_and_ground",
       "assets/tree(64x64)_and_ground.png",
@@ -147,6 +196,28 @@ export default class PreloaderScene extends Phaser.Scene {
       frameWidth: 32,
       frameHeight: 32,
     });
+    this.load.spritesheet("josh-walk-s", "assets/characters/Josh_S_walk_stand.png", {
+      frameWidth: 32,
+      frameHeight: 32,
+    });
+    this.load.spritesheet("josh-idle-frames", "assets/characters/Josh_S_idle.png", {
+      frameWidth: 32,
+      frameHeight: 32,
+    });
+    this.load.spritesheet("josh-walk-n", "assets/characters/Josh_N_walk_stand.png", {
+      frameWidth: 32,
+      frameHeight: 32,
+    });
+    this.load.spritesheet("josh-walk-w", "assets/characters/Josh_W_walk_stand.png", {
+      frameWidth: 32,
+      frameHeight: 32,
+    });
+    // using atlas for anims ??
+    // this.spritesheet = this.textures.get('library-atlas.png')
+    // this.spritesheet2 = this.textures.get('library-atlas/characters/Josh_S_walk_stand.png')
+    // this.frames.josh.walk = this.anims.generateFrameNames(this.spritesheet);
+    // this.anims.create({ key: 'walk-south', frames: this.frames.josh.walk, frameRate: 4, repeat: -1 });
+console.log(this.anims, this.frames.josh, this.spritesheet, this.spritesheet2)
     this.load.spritesheet("button-run", "assets/button-run.png", {
       frameWidth: 32,
       frameHeight: 32,
