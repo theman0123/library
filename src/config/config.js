@@ -1,6 +1,6 @@
 export default {
   type: Phaser.AUTO,
-  parent: "wib",
+  parent: "Library",
   width: 300,
   height: 600,
   pixelArt: true,

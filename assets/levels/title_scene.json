@@ -1,0 +1,39 @@
+{
+  "assets": {
+      "background_image": {
+          "type": "image",
+          "source": "assets/graphics/titleImage.png"
+      }
+  },
+  "groups": ["background", "text"],
+  "sprites": {
+      "background": {
+          "type": "background",
+          "position": { "x": 100, "y": 200 },
+          "properties": {
+              "centerOn": true,
+              "group": "background",
+              "texture": "background_image",
+              "scale": {"x": 4, "y": 4}
+          }
+      },
+      "title_message": {
+          "type": "text",
+          "position": { "x": 20, "y": 100 },
+          "properties": {
+              "group": "text",
+              "style": { "font": "65px Kells", "fill": "#00000" },
+              "text": "Maribell's Books"
+          }
+      },
+      "start_message": {
+          "type": "text",
+          "position": { "x": 150, "y": 200 },
+          "properties": {
+              "group": "text",
+              "style": { "font": "20px Kells", "fill": "#00000" },
+              "text": "Click To Start Playing"
+          }
+      }
+  }
+}

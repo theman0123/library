@@ -1,25 +1,24 @@
-import "phaser";
+import JSONLevelScene from "./JSONLevelScene";
+import Prefab from "../prefabs/Prefab";
+import TextPrefab from "../prefabs/TextPrefab";
 
-export default class TitleScene extends Phaser.Scene {
+export default class TitleScene extends JSONLevelScene {
   constructor() {
-    super("Title");
+    super("TitleScene");
+
+    this.prefab_classes = {
+        background: Prefab.prototype.constructor,
+        text: TextPrefab.prototype.constructor,
+    };
   }
 
-  create() {
-    this.createTitle();
+  start_game() {
+    this.scene.start("BootScene", { scene: "library" });
   }
 
-  centerObject(gameObject, offset = 0) {
-    this.width = this.cameras.main.width;
-    this.height = this.cameras.main.height;
-
-    gameObject.x = this.width / 2;
-    gameObject.y = this.height / 2 + 200;
-  }
-
-  createTitle() {
-    // title image
-    this.titleImage = this.add.image(0, 0, "title").setRotation(1.57);
-    this.centerObject(this.titleImage, 0);
+  update() {
+      if (this.input.activePointer.isDown) {
+          this.start_game();
+      }
   }
 }

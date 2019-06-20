@@ -1,6 +1,6 @@
 import "phaser";
 import config from "./config/config";
-import GameScene from "./scenes/GameScene";
+import WorldScene from "./scenes/WorldScene";
 import BootScene from "./scenes/BootScene";
 import PreloaderScene from "./scenes/PreloaderScene";
 import UIScene from "./scenes/UIScene";
@@ -12,14 +12,14 @@ class Game extends Phaser.Game {
   constructor() {
     super(config);
 
-    this.scene.add("Boot", BootScene);
-    this.scene.add("Preloader", PreloaderScene);
-    this.scene.add("Game", GameScene);
+    this.scene.add("BootScene", BootScene);
+    this.scene.add("PreloaderScene", PreloaderScene);
+    this.scene.add("WorldScene", WorldScene);
     this.scene.add("Library", LibraryScene);
     this.scene.add("UI", UIScene);
-    this.scene.add("Title", TitleScene);
+    this.scene.add("TitleScene", TitleScene);
     this.scene.add("Cornering", CorneringScene);
-    this.scene.start("Boot");
+    this.scene.start("BootScene", {scene: 'title'});
   }
 }
 
