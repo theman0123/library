@@ -1,0 +1,61 @@
+asset-planner: library(wib)
+
+player_character:
+  outfits
+  audio:
+    footsteps
+    pickup/switch (rose, ball, etc)
+  animations:
+    deaths
+    movements
+    
+items:
+  sphere
+  petastol (for sphere)
+  lamp/light
+  
+enemies:
+  tentacle:
+    audio:
+      splash
+      roar/sqeal
+      swipe/swing (2 or 3 variations)
+      ground-pound
+    animations:
+      deaths/resolutions
+      attack
+      emerge
+      disappear
+    
+maps:
+  library:
+    entrances/exits
+    floors
+    walls
+    tables
+    chairs
+    bookshelves
+    pool
+    rafters
+    ladders
+    out-of-bounds decorative tiles
+    decorative elements:
+      statues (gargoyles? daemons)
+      stained-glass covered
+      stained-glass uncovered
+    puzzle elements:
+      locked doors/paths
+      open doors/paths
+      
+audio:
+  death/failure
+  success
+  ball-rolling
+  ignite fire
+  slide (remove book from shelf)
+  mumbling
+  laughing
+  soundtracks:
+    title-theme
+    library-theme
+  

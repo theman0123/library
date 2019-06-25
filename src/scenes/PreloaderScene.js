@@ -11,108 +11,116 @@ export default class PreloaderScene extends Phaser.Scene {
     this.myFrames = {};
 
     this.readyCount = 1;
-    
-    this.frames = {
-      josh: {}
-    }
 
     let loading_message = this.add.text(320, 240, "loading", {
         font: "48px Kells",
         fill: "#ffffff",
       });
-    }
+  }
     
-    preload() {
-      // wtf get this working priority #1
-      // debugger
-      this.load.multiatlas("library-0", "assets/graphics/scenes/library/library.json", "assets/graphics/scenes/library");                    
+  preload() {
       // time event for logo
-      // TODO - update delayedCall to 3000
       // this.timedEvent = this.time.delayedCall(2000, this.ready, [], this);
       // this.createPreloader();
-    // this.loadAssets();
+
+      // audio
+      // this.load.audio(
+      //   "drone",
+      //   "assets/23141852_drones_by_thefoundation_preview.mp3",
+      // );
+
+      
+      // tilemap in JSON format
+      // this.load.tilemapTiledJSON("library-map", "assets/maps/library1.json");
 
     let assets = this.level_data.assets;
     for (let asset_key in assets) {
-          let asset = assets[asset_key];
-          switch (asset.type) {
-              case "image":
-                  this.load.image(asset_key, asset.source);
-                  break;
-              case "spritesheet":
-                  // 3rd argument could be an object 'assetFrameSize'
-                  this.load.spritesheet(asset_key, asset.source, {
-                      frameWidth: asset.frame_width,
-                      frameHeight: asset.frame_height,
-                      frames: asset.frames,
-                      margin: asset.margin,
-                      spacing: asset.spacing,
-                  });
-                  this.myFrames[asset.name] = {};
-                  // this.buildAnims(asset)
-                  break;
-              case "tilemap":
-              case "level_tilemap":
-                  this.load.tilemapTiledJSON(asset_key, asset.source);
-                  break;
-                  case "multiatlas":
-                    // 1. reference 2. json atlas 3. location of images
-                    console.log('multiatlas loaded')
-                    // this.load.multiatlas(asset.name, asset.json, asset.source);
-                    this.atlases[asset.name] = asset.source;
-                  break;
-              default:
-                  console.warn(
-                      "switch in Loading fired default case: ",
-                      asset_key,
-                      asset.source,
-                  );
-                  return;
-          }
+      let asset = assets[asset_key];
+      
+      switch (asset.type) {
+        case "image":
+            this.load.image(asset_key, asset.source);
+            break;
+        case "spritesheet":
+            this.load.spritesheet(asset_key, asset.source, {
+                frameWidth: asset.frame_width,
+                frameHeight: asset.frame_height,
+                frames: asset.frames,
+                margin: asset.margin,
+                spacing: asset.spacing,
+            });
+            break;
+        case "tilemap":
+        case "level_tilemap":
+            this.load.tilemapTiledJSON(asset_key, asset.source);
+            break;
+            case "multiatlas":
+              // 1. reference 2. json atlas 3. location of images
+              this.load.multiatlas(asset.name, asset.json, asset.source);
+              this.atlases[asset.name] = asset.source;
+            break;
+        default:
+            console.warn(
+                "switch in Loading fired default case: ",
+                asset_key,
+                asset.source,
+            );
+            return;
       }
+    }
   }
 
   create(data) {
-    // WORKING HERE
-    // try and get this working
-// debugger
-    this.myFrames['test'] = this.anims.generateFrameNames('library-0', {
-      start: 0, end: 28, zeroPad: 2,
-      prefix: 'characters/josh/idle/JoshSidle_', suffix: '.png'
-    });
-    console.log('test: ', this.myFrames['test'])
+    this.buildAnims(this.level_data.assets)
+
     this.scene.start(data.scene, { level_data: this.level_data });
   }
 
-  buildAnims(asset) {
-    if (!asset.animations) {
-      console.warn('no anims for: ', asset)
-      return ;
-    }
+  buildAnims(assets) {
+    for (let asset_key in assets) {
+      let asset = assets[asset_key]
+      console.group(asset_key)
+      
+      if (!asset.animations) {
+        console.warn('no anims for: ', asset)
+        // skips to next iteration; doesn't 'break' loop
+        console.groupEnd()
+        continue;
+      }
+      
+      if (asset.type === 'spritesheet' && asset.animations) {
+        console.table('animations: ', asset.animations)
+        
+        for ( let anim_key in asset.animations ) {
+          this.myFrames[asset.name] = {};
+          let anim = asset.animations[anim_key]
+          
+          console.group(`${anim_key}`)
+          console.log(anim)
 
-    // TODO: 
-    //  2. 
+          // generate frame names
+          this.myFrames[asset.name][anim_key] = this.anims.generateFrameNames(anim.atlas, {
+            start: anim.start, end: anim.end, zeroPad: anim.zeroPad,
+            prefix: anim.prefix, suffix: anim.suffix
+          });
+          // create animation
+          this.anims.create({
+              key: `${asset.name}${asset.anim}`,
+              frames: this.myFrames[asset.name][asset.anim],
+              frameRate: anim.frameRate,
+              yoyo: anim.yoyo,
+              repeat: anim.repeat,
+            });
+          console.log('myFrames: ', this.myFrames[asset.name][anim_key])
+          console.log(this.myFrames[asset.name][anim_key] ? '%c SUCCESS': ' %c FAIL', this.myFrames[asset.name][anim_key] ? 'background: yellow; color: green': 'background: grey; color: red' )
+          console.groupEnd();
+          console.groupEnd();
+          }
+        }
+      }
+    
 
-    for ( let anim_key in asset.animations ) {
-      console.log('animations: ', anim_key, asset, this.atlases)
-      // 'idle', {josh}
-      let anim = asset.animations[anim_key]
-      // console.log('test', this.myFrames, this.myFrames[asset.name] )
-       // create anims
-      //  example: prefix: 'characters/josh/idle/JoshSidle_', suffix: '.png'
-      this.myFrames[asset.name][anim_key] = this.anims.generateFrameNames('library', {
-        start: 0, end: 28, zeroPad: 2,
-        prefix: "characters/josh/idle/JoshSidle_", suffix: ".png"
-      });
-  console.log('myFrames: ', this.myFrames[asset.name][anim_key], anim.prefix, this.atlases)
-  //   this.anims.create({
-  //     key: `${asset.name}${asset.anim}`,
-  //     frames: this.myFrames[asset.name][asset.anim],
-  //     frameRate: anim.frameRate,
-  //     yoyo: anim.yoyo,
-  //     repeat: anim.repeat,
-  //   });
-    }
+      console.log('atlases: ', this.atlases)
 
   }
 
@@ -203,31 +211,7 @@ export default class PreloaderScene extends Phaser.Scene {
     });
   }
 
-  loadAssets() {
-    // audio
-    // this.load.audio(
-    //   "drone",
-    //   "assets/23141852_drones_by_thefoundation_preview.mp3",
-    // );
 
-    // load assets for game
-    
-    // tilemap in JSON format
-    // this.load.tilemapTiledJSON("library-map", "assets/maps/library1.json");
-
-    // haven't tried might work
-    // this.load.atlas('megaset', 'assets/atlas/megaset-0.png', 'assets/atlas/megaset-0.json');
-
-    // spritesheets
-    // this.load.spritesheet(
-    //   "library-tileset",
-    //   "assets/graphics/library-0.png",
-    //   {
-    //     frameWidth: 32,
-    //     frameHeight: 32,
-    //   },
-    // );
-  }
 
   ready() {
     this.readyCount++;

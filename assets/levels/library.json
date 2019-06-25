@@ -9,34 +9,35 @@
     },
     "atlas": {
         "type": "multiatlas",
-        "name": "library",
-        "json": "assets/graphics/library.json",
+        "name": "library-0",
+        "json": "assets/graphics/scenes/library/library.json",
         "source": "assets/graphics/scenes/library"
     },
-      "player_spritesheet": {
-          "type": "spritesheet",
-          "source": "assets/graphics/characters/josh",
-          "name": "josh",
-          "frame_width": 32,
-          "frame_height": 32,
-          "animations": { 
-              "idle": {
-                   "atlas": "library",
-                   "prefix": "characters/josh/idle/JoshSidle_",
-                   "suffix": ".png",
-                   "start": 0,
-                   "end": 27,
-                   "frameRate": 5,
-                   "yoyo": false,
-                   "repeat": -1
-            }
+    "player_spritesheet": {
+        "type": "spritesheet",
+        "source": "assets/graphics/characters/josh",
+        "name": "josh",
+        "frame_width": 32,
+        "frame_height": 32,
+        "animations": { 
+            "idle": {
+                  "atlas": "library-0",
+                  "prefix": "characters/josh/idle/JoshSidle_",
+                  "suffix": ".png",
+                  "start": 0,
+                  "end": 28,
+                  "zeroPad": 2,
+                  "frameRate": 5,
+                  "yoyo": false,
+                  "repeat": -1
           }
-      },
+        }
+    },
 
-      "level_tilemap": {
-          "type": "tilemap",
-          "source": "assets/maps/library1.json"
-      }
+    "level_tilemap": {
+        "type": "tilemap",
+        "source": "assets/maps/library1.json"
+    }
   },
   "groups": ["player"],
   "map": {
